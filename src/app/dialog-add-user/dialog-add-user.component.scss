@@ -1,0 +1,12 @@
+.formStyle{
+    margin: 16px;
+    width: auto;
+    color: whitesmoke;
+    .inputFields{
+        display: flex;
+        gap: 8px;
+    }
+    .fullWidth{
+        width: 100%;
+    }
+}
