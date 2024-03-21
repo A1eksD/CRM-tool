@@ -32,6 +32,7 @@ export class UserComponent {
   constructor(public dialog: MatDialog, private firestore:Firestore) {
 
     onSnapshot(this.getUsersInfo(), (list) => {
+      this.allUsers = [];
       list.forEach( element => {
         console.log(element.data() as User);
         console.log(element.id);

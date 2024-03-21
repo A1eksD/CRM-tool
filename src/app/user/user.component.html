@@ -8,7 +8,7 @@
             </tr>
             <!-- @if (user.id) { -->
                 <tr *ngFor="let user of allUsers">
-                    <!-- @if (user.id === -1) { -->
+                    <!-- @if (user.id,seconds === -1) { -->
                     <td>{{user.firstName}} {{user.lastName}}</td>
                     <td>{{user.street}}</td>
                     <td>{{user.city}}</td>
