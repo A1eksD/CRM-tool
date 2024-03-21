@@ -1,3 +1,24 @@
+<mat-card>
+    <mat-card-content>
+        <table class="sideTable">
+            <tr>
+                <th>Name</th>
+                <th>E-Mail</th>
+                <th>City</th>
+            </tr>
+            <!-- @if (user.id) { -->
+                <tr *ngFor="let user of allUsers">
+                    <!-- @if (user.id === -1) { -->
+                    <td>{{user.firstName}} {{user.lastName}}</td>
+                    <td>{{user.street}}</td>
+                    <td>{{user.city}}</td>
+                    <!-- } -->
+                </tr>
+            <!-- } -->
+        </table>
+    </mat-card-content>
+  </mat-card>
+  
 <button mat-fab color="primary" class="addUserBtn" [matTooltipPosition]="'above'" matTooltip="Add new user"  (click)="openDialog()">
     <mat-icon>person_add</mat-icon>
 </button>

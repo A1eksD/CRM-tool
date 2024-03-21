@@ -7,12 +7,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { User } from '../models/user.class';
 import { FormsModule } from '@angular/forms';
-import { Firestore, doc, updateDoc } from '@angular/fire/firestore/firebase';
-import { collection } from '@firebase/firestore';
-// import { AngularFireModule } from '@angular/fire/compat';
-// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
+import { Firestore, addDoc, collection, doc, setDoc, updateDoc} from '@angular/fire/firestore';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { CommonModule } from '@angular/common';
+import {MatCardModule} from '@angular/material/card';
+
 
 @Component({
   selector: 'app-dialog-add-user',
@@ -26,9 +25,10 @@ import 'firebase/compat/firestore';
     MatInputModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    FormsModule
-    // ,AngularFirestoreModule,
-    // AngularFireModule
+    FormsModule,
+    MatProgressBarModule,
+    CommonModule,
+    MatCardModule
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './dialog-add-user.component.html',
@@ -37,21 +37,23 @@ import 'firebase/compat/firestore';
 export class DialogAddUserComponent {
   user = new User();
   birthDate!: Date;
-  // firestore: Firestore = inject(Firestore);
+  loading = false;
+
 
   constructor(private firestore: Firestore){}
   
   async saveUser(){
     this.user.birthDate = this.birthDate.getTime();
-    console.log('current user', this.user);
+    this.loading = true;
 
-    // const usersCollection = collection(this.firestore, 'users');
-    // const userDetails = doc(usersCollection, 'users')
-    // await updateDoc(userDetails, this.user.toJSON())
-    //   .then((result: any) => {
-    //     console.log('adding user finished',result);
-        
-    //   });
-    
+    await addDoc(this.getUsersRef(), this.user.toJSON()).catch( // addDoc(referenz in firebase, gameData).
+      (err) => { console.error(err)}
+    ).then(
+      (docRef) => {console.log(docRef?.id)});
+    this.loading = false;
+  }
+
+  getUsersRef(){
+    return collection(this.firestore, 'userID'); // 'users' = Referenz/id
   }
 }
