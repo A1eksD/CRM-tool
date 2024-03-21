@@ -32,7 +32,6 @@ export class UserComponent {
   constructor(public dialog: MatDialog, private firestore:Firestore) {
 
     onSnapshot(this.getUsersInfo(), (list) => {
-      this.allUsers = [];
       list.forEach( element => {
         console.log(element.data() as User);
         console.log(element.id);
@@ -50,8 +49,7 @@ export class UserComponent {
     // this.test();
     // onSnapshot(this.getUsersInfo(), (list) => {
     //   list.forEach((element) => {
-    //     const existingUser = this.allUsers.find(user => (user as User).id ===onSnapshot(this.getUsersInfo(), (list) => {
-    // });
+    //     const existingUser = this.allUsers.find(user => (user as User).id === element.id)
     //     if (!existingUser) {
     //       this.allUsers.push(element.data() as User);
     //     }
