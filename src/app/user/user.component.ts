@@ -1,92 +1,69 @@
 import { Component } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import { User } from '../models/user.class';
-import {MatCardModule} from '@angular/material/card';
-import { Firestore, collection, doc, onSnapshot } from '@angular/fire/firestore';
+import { MatCardModule } from '@angular/material/card';
+import {
+  Firestore,
+  collection,
+  doc,
+  docData,
+  onSnapshot,
+} from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
-
-
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [MatButtonModule,
-    MatIconModule, 
-    MatTooltipModule, 
-    MatDialogModule, 
+  imports: [
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatDialogModule,
     MatCardModule,
-    CommonModule],
+    CommonModule,
+    RouterModule
+  ],
   templateUrl: './user.component.html',
-  styleUrl: './user.component.scss'
+  styleUrl: './user.component.scss',
 })
 export class UserComponent {
   user = new User();
-  allUsers: User[] = [];
-  testdata : any [] = [];
+  allUsers: any[] = [];
+  testdata: any[] = [];
+  unsubUsers;
+  
+
+  constructor(public dialog: MatDialog, private firestore: Firestore) {
+
+    this.unsubUsers = this.subUsersList();
+
+  }
 
 
-  constructor(public dialog: MatDialog, private firestore:Firestore) {
-
-    onSnapshot(this.getUsersInfo(), (list) => {
-      list.forEach( element => {
-        console.log(element.data() as User);
-        console.log(element.id);
-        // this.testdata.push(element.id);
-        // this.testdata.push(element.data() as User);
-        // console.log('------',element.data().id);
-        // let test = this.allUsers.element.data() as User;
-        // if (this.allUsers.element.id === -1) {
-        // if (test.id.seconds === -1) {
-          this.allUsers.push(element.data() as User);
-        // }
+  subUsersList(){
+    onSnapshot(this.getUsersInfo(), (list) => {//lade die datein ausm backend
+      this.allUsers = []; //leere das array
+      list.forEach((element) => { //lese jedes elemant ausm backend aus
+        const userData = element.data(); // daten des elements erhalten
+        const userWithId = { id: element.id, ...userData }; // Ein objekt mit ID-iigenschaft erstellen
+        this.allUsers.push(userWithId); // Das Objekt zur allUsers-Liste hinzufügen
       });
     });
-    //--------------------------------------------------------
-    // this.test();
-    // onSnapshot(this.getUsersInfo(), (list) => {
-    //   list.forEach((element) => {
-    //     const existingUser = this.allUsers.find(user => (user as User).id === element.id)
-    //     if (!existingUser) {
-    //       this.allUsers.push(element.data() as User);
-    //     }
-    //   });
-    // });
-    // console.log( this.testdata);
-    //------------------------------------------------------------
-    // onSnapshot(this.getUsersInfo(), (list) => {
-    //   list.forEach( element => {
-    //     console.log(element.data() as User);
-    //     console.log(element.id);
-    //     // this.testdata.push(element.id);
-    //     // this.testdata.push(element.data() as User);
-    //     // console.log('------',element.data().id);
-    //     let test = element.data() as User;
-    //     if (element.id.seconds === -1) {
-    //       this.allUsers.push(element.data() as User);
-    //     }
-    //   });
-    // });
   }
 
-  // test(){
-  //   this.allUsers.forEach(test => {
-  //     if (test.id === -1) {
-  //       this.testdata.push(test);
-  //     }
-  //   });
-  // }
 
-  getUsersInfo(){
-    return collection(this.firestore, 'userID'); // 'users' = Referenz/id
+  getUsersInfo() {
+    return collection(this.firestore, 'user'); // 'users' = Referenz/id
   }
 
-  openDialog(){
-    this.dialog.open(DialogAddUserComponent, {
-
-    });
+  
+  openDialog() {
+    this.dialog.open(DialogAddUserComponent, {});
   }
+
 }

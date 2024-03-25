@@ -17,5 +17,4 @@ import {MatIconModule} from '@angular/material/icon';
 export class AppComponent {
   title = 'simple-crm';
   showFiller = false;
-  // firestore: Firestore = inject(Firestore);
 }

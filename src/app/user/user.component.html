@@ -6,15 +6,12 @@
                 <th>E-Mail</th>
                 <th>City</th>
             </tr>
-            <!-- @if (user.id) { -->
-                <tr *ngFor="let user of allUsers">
-                    <!-- @if (user.id,seconds === -1) { -->
+
+                <tr *ngFor="let user of allUsers" [routerLink]="['/user/' + user.id]" >
                     <td>{{user.firstName}} {{user.lastName}}</td>
-                    <td>{{user.street}}</td>
+                    <td>{{user.email}}</td>
                     <td>{{user.city}}</td>
-                    <!-- } -->
                 </tr>
-            <!-- } -->
         </table>
     </mat-card-content>
   </mat-card>

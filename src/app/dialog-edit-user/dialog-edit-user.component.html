@@ -3,10 +3,7 @@
 
 
 <div class="formStyle">
-    <h1 mat-dialog-title class="paddigLeft0">Add user</h1>
-    <mat-dialog-content class="paddigLeft0">
-      hier User hinzufügen
-    </mat-dialog-content>
+    <h1 mat-dialog-title class="paddigLeft0">Edit user</h1>
     <div class="inputFields">
         <mat-form-field appearance="outline">
             <mat-label>First Name</mat-label>
@@ -19,41 +16,19 @@
         </mat-form-field>
     </div>
 
-    <div>
         <mat-form-field appearance="outline" class="fullWidth">
             <mat-label>E-Mail</mat-label>
             <input [disabled]="loading" matInput placeholder="E-Mail" [(ngModel)]="user.email">
-        </mat-form-field>          
-    </div>
-    <div>
+        </mat-form-field>    
         <mat-form-field appearance="outline" class="fullWidth">
             <mat-label>MM/DD/YYYY</mat-label>
             <input matInput [disabled]="loading" [matDatepicker]="picker1" [(ngModel)]="birthDate">
             <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>          
-    </div>
-
-    <div>
-        <mat-form-field appearance="outline" class="fullWidth">
-            <mat-label>Street + House No.</mat-label>
-            <input [disabled]="loading" matInput placeholder="Street + House No."  [(ngModel)]="user.street">
-        </mat-form-field>
-    </div>
-
-    <div class="inputFields">
-        <mat-form-field appearance="outline">
-            <mat-label>Zip code</mat-label>
-            <input [disabled]="loading" matInput placeholder="Address" [(ngModel)]="user.zipCode">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>City</mat-label>
-            <input [disabled]="loading" matInput placeholder="Address" [(ngModel)]="user.city">
-        </mat-form-field>
-    </div>
+        </mat-form-field>     
 
     <mat-dialog-actions>
       <button [disabled]="loading" mat-button mat-dialog-close>Cancel</button>
-      <button [disabled]="loading" mat-button mat-dialog-close cdkFocusInitial (click)="saveUser()">Save</button>
+      <button [disabled]="loading" mat-button mat-dialog-close cdkFocusInitial (click)="saveEditUser()">Save</button>
     </mat-dialog-actions>
 </div>

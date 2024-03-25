@@ -43,17 +43,18 @@ export class DialogAddUserComponent {
   constructor(private firestore: Firestore){}
   
   async saveUser(){
-    this.user.birthDate = this.birthDate.getTime();
+    this.user.birthDate = this.birthDate.getTime(); 
     this.loading = true;
 
-    await addDoc(this.getUsersRef(), this.user.toJSON()).catch( // addDoc(referenz in firebase, gameData).
-      (err) => { console.error(err)}
-    ).then(
-      (docRef) => {console.log(docRef?.id)});
+    await addDoc(this.getUsersRef(), this.user.toJSON()).catch( // addDoc((firesore, id unter ders abgespeichert wird)), objekt als json). - ins backend pushen
+      (err) => { console.error(err)} // wenn fehler
+    )
+    // .then(
+    //   (docRef) => {console.log('anlegen erfolgreich unter der id', docRef?.id)}); // wenn push erfolgreeich ist, dann zeige jeweilige id an
     this.loading = false;
   }
 
   getUsersRef(){
-    return collection(this.firestore, 'userID'); // 'users' = Referenz/id
+    return collection(this.firestore, 'user'); // 'users' = Referenz/id
   }
 }
